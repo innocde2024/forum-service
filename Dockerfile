@@ -1,5 +1,5 @@
 # Stage 1: install dependencies
-FROM node:16-alpine As development
+FROM node:18-alpine As development
 
 # Set working directory
 WORKDIR /usr/src/app
@@ -17,7 +17,7 @@ USER node
 
 
 # Stage 2: build
-FROM node:16-alpine As build
+FROM node:18-alpine As build
 
 # Set working directory
 WORKDIR /usr/src/app
@@ -44,7 +44,7 @@ USER node
 
 
 # Stage 3: run
-FROM node:16-alpine As production
+FROM node:19-alpine As production
 
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/package.json ./package.json
