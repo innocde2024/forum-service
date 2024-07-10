@@ -26,9 +26,6 @@ class ConfigService {
   get JWTDbUri(): string {
     return this.getEnv("DB_URI");
   }
-  get RABBIT_URI(): string {
-    return this.getEnv("RABBIT_URI");
-  }
   get CLIENT_URI(): string {
     return this.getEnv("CLIENT_URI");
   }
