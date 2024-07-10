@@ -14,7 +14,6 @@
   "license": "ISC",
   "dependencies": {
     "@types/mongoose": "^5.11.97",
-    "amqplib": "^0.10.4",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "date-fns": "^2.30.0",
@@ -29,12 +28,10 @@
     "mongoose": "^8.5.0",
     "morgan": "^1.10.0",
     "node-schedule": "^2.1.1",
-    "node-vault": "^0.10.2",
     "number-precision": "^1.6.0",
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.2",
     "socket.io": "^4.7.5",
-    "swagger-jsdoc": "^6.2.8",
     "typeorm": "^0.3.17",
     "winston": "^3.10.0",
     "winston-daily-rotate-file": "^4.7.1"
