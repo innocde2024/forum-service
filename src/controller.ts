@@ -4,12 +4,17 @@ import { HttpStatusCode } from "./common/constants";
 import service from "./service";
 import { RequestCustom } from "./common/types/express";
 import App from "@/app";
-import { Schema } from "mongoose";
+import Comment from "./databases/model/Comment";
+import BadRequestException from "./common/exception/BadRequestException";
 class Controller {
   async getPosts(request: Request, response: Response, next: NextFunction) {
-    const { page = 1, limit = 10 } = request.query;
+    const { page = 1, limit = 10, topic } = request.query;
     try {
-      const data = await service.getPosts(Number(page), Number(limit));
+      const data = await service.getPosts(
+        Number(page),
+        Number(limit),
+        topic as string
+      );
       return response.status(HttpStatusCode.OK).json({
         httpStatusCode: HttpStatusCode.OK,
         data,
@@ -173,6 +178,13 @@ class Controller {
     const { id } = request.params;
     const { id: userId } = request.userInfo;
     try {
+      const comment = await Comment.findOne({ _id: id, author: userId });
+      if (!comment) {
+        throw new BadRequestException({
+          errorCode: "NotFound",
+          errorMessage: "Comment not found",
+        });
+      }
       const deletedComment = await service.deleteComment(id, userId);
       if (!deletedComment) {
         return response.status(HttpStatusCode.NOT_FOUND).json({
@@ -180,6 +192,7 @@ class Controller {
           message: "Comment not found",
         });
       }
+      App.io.emit("commentDeleted", { postId: comment.postId });
       return response.status(HttpStatusCode.OK).json({
         httpStatusCode: HttpStatusCode.OK,
         message: "Comment deleted successfully",

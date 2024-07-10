@@ -1,19 +1,25 @@
 import BadRequestException from "./common/exception/BadRequestException";
 import Comment, { IComment } from "./databases/model/Comment";
-import Like, { ILike } from "./databases/model/Like";
+import Like from "./databases/model/Like";
 import Post, { IPost } from "./databases/model/Post";
 class Service {
-  async getPosts(page: number, limit: number) {
+  async getPosts(page: number, limit: number, topic?: string) {
     const skip = (page - 1) * limit;
-    const posts = await Post.find()
+    const query: any = {};
+    if (topic) {
+      query.topic = topic;
+    }
+    const posts = await Post.find(query)
       .skip(skip)
       .limit(limit)
       .populate({ path: "comments", model: Comment })
       .populate({ path: "likes", model: Like })
       .exec();
-    const total = await Post.countDocuments();
+
+    const total = await Post.countDocuments(query);
     return { posts, total, page, limit };
   }
+
   async getPostById(postId: string) {
     const post = await Post.findById(postId)
       .populate({ path: "comments", model: Comment })
@@ -86,7 +92,6 @@ class Service {
   }
 
   async deleteComment(commentId: string, userId: string) {
-    console.log(commentId + " " + userId);
     const comment = await Comment.findOne({ _id: commentId, author: userId });
 
     if (!comment) {
