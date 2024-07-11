@@ -13,6 +13,7 @@
   },
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/vision": "^4.3.0",
     "@types/mongoose": "^5.11.97",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",

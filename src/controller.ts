@@ -6,6 +6,7 @@ import { RequestCustom } from "./common/types/express";
 import App from "@/app";
 import Comment from "./databases/model/Comment";
 import BadRequestException from "./common/exception/BadRequestException";
+import { detectSafeSearch } from "../util/dectectImage";
 class Controller {
   async getPosts(request: Request, response: Response, next: NextFunction) {
     const { page = 1, limit = 10, topic } = request.query;
@@ -48,6 +49,15 @@ class Controller {
     next: NextFunction
   ) {
     const { content, fileUrl, topic } = request.body;
+    const verifyArray = detectSafeSearch(fileUrl);
+    (await verifyArray).forEach((item) => {
+      if (item === "LIKELY") {
+        throw new BadRequestException({
+          errorCode: "UnAvailableImage",
+          errorMessage: "UnAvailableImage",
+        });
+      }
+    });
     const { id } = request.userInfo;
     try {
       const post = await service.createPost({
