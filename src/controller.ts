@@ -49,15 +49,18 @@ class Controller {
     next: NextFunction
   ) {
     const { content, fileUrl, topic } = request.body;
-    const verifyArray = detectSafeSearch(fileUrl);
-    (await verifyArray).forEach((item) => {
-      if (item === "LIKELY") {
-        throw new BadRequestException({
-          errorCode: "UnAvailableImage",
-          errorMessage: "UnAvailableImage",
-        });
-      }
-    });
+    if (fileUrl) {
+      const verifyArray = detectSafeSearch(fileUrl);
+      (await verifyArray).forEach((item) => {
+        if (item === "LIKELY") {
+          throw new BadRequestException({
+            errorCode: "UnAvailableImage",
+            errorMessage: "UnAvailableImage",
+          });
+        }
+      });
+    }
+
     const { id } = request.userInfo;
     try {
       const post = await service.createPost({
@@ -83,6 +86,17 @@ class Controller {
     const { id } = request.params;
     const { id: userId } = request.userInfo;
     const { content, fileUrl, topic } = request.body;
+    if (fileUrl) {
+      const verifyArray = detectSafeSearch(fileUrl);
+      (await verifyArray).forEach((item) => {
+        if (item === "LIKELY") {
+          throw new BadRequestException({
+            errorCode: "UnAvailableImage",
+            errorMessage: "UnAvailableImage",
+          });
+        }
+      });
+    }
     try {
       const updatedPost = await service.editPost(id, userId, {
         content,
@@ -135,6 +149,17 @@ class Controller {
   ) {
     const { postId } = request.params;
     const { content, fileUrl } = request.body;
+    if (fileUrl) {
+      const verifyArray = detectSafeSearch(fileUrl);
+      (await verifyArray).forEach((item) => {
+        if (item === "LIKELY") {
+          throw new BadRequestException({
+            errorCode: "UnAvailableImage",
+            errorMessage: "UnAvailableImage",
+          });
+        }
+      });
+    }
     const { id: userId } = request.userInfo;
     try {
       const comment = await service.addComment(postId, {
@@ -158,6 +183,17 @@ class Controller {
   ) {
     const { id } = request.params;
     const { content, fileUrl } = request.body;
+    if (fileUrl) {
+      const verifyArray = detectSafeSearch(fileUrl);
+      (await verifyArray).forEach((item) => {
+        if (item === "LIKELY") {
+          throw new BadRequestException({
+            errorCode: "UnAvailableImage",
+            errorMessage: "UnAvailableImage",
+          });
+        }
+      });
+    }
     const { id: userId } = request.userInfo;
     try {
       const updatedComment = await service.editComment(id, userId, {
