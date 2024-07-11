@@ -216,37 +216,37 @@ class Controller {
       next(error);
     }
   }
-  async deleteComment(
-    request: RequestCustom,
-    response: Response,
-    next: NextFunction
-  ) {
-    const { id } = request.params;
-    const { id: userId } = request.userInfo;
-    try {
-      const comment = await Comment.findOne({ _id: id, author: userId });
-      if (!comment) {
-        throw new BadRequestException({
-          errorCode: "NotFound",
-          errorMessage: "Comment not found",
-        });
-      }
-      const deletedComment = await service.deleteComment(id, userId);
-      if (!deletedComment) {
-        return response.status(HttpStatusCode.NOT_FOUND).json({
-          httpStatusCode: HttpStatusCode.NOT_FOUND,
-          message: "Comment not found",
-        });
-      }
-      App.io.emit("commentDeleted", { postId: comment.postId });
-      return response.status(HttpStatusCode.OK).json({
-        httpStatusCode: HttpStatusCode.OK,
-        message: "Comment deleted successfully",
-      });
-    } catch (error) {
-      next(error);
-    }
-  }
+  // async deleteComment(
+  //   request: RequestCustom,
+  //   response: Response,
+  //   next: NextFunction
+  // ) {
+  //   const { id } = request.params;
+  //   const { id: userId } = request.userInfo;
+  //   try {
+  //     const comment = await Comment.findOne({ _id: id, author: userId });
+  //     if (!comment) {
+  //       throw new BadRequestException({
+  //         errorCode: "NotFound",
+  //         errorMessage: "Comment not found",
+  //       });
+  //     }
+  //     const deletedComment = await service.deleteComment(id, userId);
+  //     if (!deletedComment) {
+  //       return response.status(HttpStatusCode.NOT_FOUND).json({
+  //         httpStatusCode: HttpStatusCode.NOT_FOUND,
+  //         message: "Comment not found",
+  //       });
+  //     }
+  //     App.io.emit("commentDeleted", { postId: comment.postId });
+  //     return response.status(HttpStatusCode.OK).json({
+  //       httpStatusCode: HttpStatusCode.OK,
+  //       message: "Comment deleted successfully",
+  //     });
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
   async addLike(
     request: RequestCustom,
     response: Response,

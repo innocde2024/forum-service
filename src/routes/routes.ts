@@ -13,10 +13,10 @@ router.post(
   controller.addComment
 );
 router.put("/forum/post/comment/:id", authMiddleware, controller.editComment);
-router.delete(
-  "/forum/post/comment/:postId",
-  authMiddleware,
-  controller.deleteComment
-);
+// router.delete(
+//   "/forum/post/comment/:postId",
+//   authMiddleware,
+//   controller.deleteComment
+// );
 router.post("/forum/post/like/:postId", authMiddleware, controller.addLike);
 export default router;
