@@ -6,7 +6,7 @@ import { RequestCustom } from "./common/types/express";
 import App from "@/app";
 import Comment from "./databases/model/Comment";
 import BadRequestException from "./common/exception/BadRequestException";
-import { detectSafeSearch } from "../util/dectectImage";
+import { detectSafeSearch } from "./common/utils/dectectImage";
 class Controller {
   async getPosts(request: Request, response: Response, next: NextFunction) {
     const { page = 1, limit = 10, topic } = request.query;
