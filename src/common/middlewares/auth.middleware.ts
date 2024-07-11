@@ -26,6 +26,7 @@ export const authMiddleware = async (
         errorMessage: "Token was expired",
       });
     }
+    console.log(error);
     throw new UnAuthorException({
       errorCode: "InvalidToken",
       errorMessage: "Invalid token",

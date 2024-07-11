@@ -14,7 +14,7 @@ export interface IPost extends Document {
 const postSchema = new Schema<IPost>(
   {
     content: { type: String, required: true },
-    fileUrl: { type: String, required: true },
+    fileUrl: { type: String },
     author: { type: String, required: true },
     topic: { type: String, required: true },
     likes: [{ type: Schema.Types.ObjectId, ref: "Like" }],

@@ -34,14 +34,7 @@ export class App {
   }
 
   private middlewares() {
-    this.app.use(
-      cors({
-        origin: config.CLIENT_URI, // Replace with your client URL
-        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-        allowedHeaders: ["my-custom-header"],
-        credentials: true,
-      })
-    );
+    this.app.use(cors());
     this.app.use(helmet());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));

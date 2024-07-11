@@ -13,7 +13,7 @@ const commentSchema = new Schema<IComment>(
   {
     postId: { type: Schema.Types.ObjectId, ref: "Post", required: true },
     content: { type: String, required: true },
-    fileUrl: { type: String, required: true },
+    fileUrl: { type: String },
     author: { type: String, required: true },
   },
   { timestamps: true }
