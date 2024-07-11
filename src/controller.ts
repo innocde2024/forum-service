@@ -50,12 +50,22 @@ class Controller {
   ) {
     const { content, fileUrl, topic } = request.body;
     if (fileUrl) {
-      const verifyArray = detectSafeSearch(fileUrl);
-      (await verifyArray).forEach((item) => {
-        if (item === "LIKELY") {
+      const detections = await detectSafeSearch(fileUrl);
+      const detectionMap = {
+        adult: "Adult",
+        spoof: "Spoof",
+        medical: "Medical",
+        violence: "Violence",
+        racy: "Racy",
+      };
+      Object.keys(detectionMap).forEach((key, index) => {
+        if (
+          detections?.[key] === "LIKELY" ||
+          detections?.[key] === "VERY_LIKELY"
+        ) {
           throw new BadRequestException({
-            errorCode: "UnAvailableImage",
-            errorMessage: "UnAvailableImage",
+            errorCode: detectionMap[key],
+            errorMessage: `Image contains ${detectionMap[key]} content.`,
           });
         }
       });
@@ -87,12 +97,22 @@ class Controller {
     const { id: userId } = request.userInfo;
     const { content, fileUrl, topic } = request.body;
     if (fileUrl) {
-      const verifyArray = detectSafeSearch(fileUrl);
-      (await verifyArray).forEach((item) => {
-        if (item === "LIKELY") {
+      const detections = detectSafeSearch(fileUrl);
+      const detectionMap = {
+        adult: "Adult",
+        spoof: "Spoof",
+        medical: "Medical",
+        violence: "Violence",
+        racy: "Racy",
+      };
+      Object.keys(detectionMap).forEach((key, index) => {
+        if (
+          detections?.[key] === "LIKELY" ||
+          detections?.[key] === "VERY_LIKELY"
+        ) {
           throw new BadRequestException({
-            errorCode: "UnAvailableImage",
-            errorMessage: "UnAvailableImage",
+            errorCode: detectionMap[key],
+            errorMessage: `Image contains ${detectionMap[key]} content.`,
           });
         }
       });
@@ -150,12 +170,22 @@ class Controller {
     const { postId } = request.params;
     const { content, fileUrl } = request.body;
     if (fileUrl) {
-      const verifyArray = detectSafeSearch(fileUrl);
-      (await verifyArray).forEach((item) => {
-        if (item === "LIKELY") {
+      const detections = await detectSafeSearch(fileUrl);
+      const detectionMap = {
+        adult: "Adult",
+        spoof: "Spoof",
+        medical: "Medical",
+        violence: "Violence",
+        racy: "Racy",
+      };
+      Object.keys(detectionMap).forEach((key, index) => {
+        if (
+          detections?.[key] === "LIKELY" ||
+          detections?.[key] === "VERY_LIKELY"
+        ) {
           throw new BadRequestException({
-            errorCode: "UnAvailableImage",
-            errorMessage: "UnAvailableImage",
+            errorCode: detectionMap[key],
+            errorMessage: `Image contains ${detectionMap[key]} content.`,
           });
         }
       });
@@ -184,12 +214,22 @@ class Controller {
     const { id } = request.params;
     const { content, fileUrl } = request.body;
     if (fileUrl) {
-      const verifyArray = detectSafeSearch(fileUrl);
-      (await verifyArray).forEach((item) => {
-        if (item === "LIKELY") {
+      const detections = await detectSafeSearch(fileUrl);
+      const detectionMap = {
+        adult: "Adult",
+        spoof: "Spoof",
+        medical: "Medical",
+        violence: "Violence",
+        racy: "Racy",
+      };
+      Object.keys(detectionMap).forEach((key, index) => {
+        if (
+          detections?.[key] === "LIKELY" ||
+          detections?.[key] === "VERY_LIKELY"
+        ) {
           throw new BadRequestException({
-            errorCode: "UnAvailableImage",
-            errorMessage: "UnAvailableImage",
+            errorCode: detectionMap[key],
+            errorMessage: `Image contains ${detectionMap[key]} content.`,
           });
         }
       });

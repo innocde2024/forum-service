@@ -1,4 +1,5 @@
 import vision from "@google-cloud/vision";
+import BadRequestException from "../exception/BadRequestException";
 
 const CREDENTIALS = JSON.parse(
   JSON.stringify({
@@ -29,12 +30,5 @@ const client = new vision.ImageAnnotatorClient(CONFIG);
 
 export const detectSafeSearch = async (file_path) => {
   let [result] = await client.safeSearchDetection(file_path);
-  const detections = result.safeSearchAnnotation;
-  return [
-    detections?.adult,
-    detections?.spoof,
-    detections?.medical,
-    detections?.violence,
-    detections?.racy,
-  ];
+  return result.safeSearchAnnotation;
 };
