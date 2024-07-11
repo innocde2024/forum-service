@@ -91,22 +91,22 @@ class Service {
     );
   }
 
-  async deleteComment(commentId: string, userId: string) {
-    const comment = await Comment.findOne({ _id: commentId, author: userId });
+  // async deleteComment(commentId: string, userId: string): Promise<any> {
+  //   const comment = await Comment.findOne({ _id: commentId, author: userId });
 
-    if (!comment) {
-      throw new BadRequestException({
-        errorCode: "NotFound",
-        errorMessage: "Comment not found",
-      });
-    }
-    await Post.findOneAndUpdate(
-      { _id: comment.postId, author: userId },
-      {
-        $pull: { comments: commentId },
-      }
-    );
-    return await comment.deleteOne();
-  }
+  //   if (!comment) {
+  //     throw new BadRequestException({
+  //       errorCode: "NotFound",
+  //       errorMessage: "Comment not found",
+  //     });
+  //   }
+  //   await Post.findOneAndUpdate(
+  //     { _id: comment.postId, author: userId },
+  //     {
+  //       $pull: { comments: commentId },
+  //     }
+  //   );
+  //   return await comment.deleteOne();
+  // }
 }
 export default new Service();
